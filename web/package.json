@@ -1,0 +1,14 @@
+{
+	"name": "web",
+	"version": "1.0.0",
+	"scripts": {
+		"fmt": "npx @biomejs/biome format --write",
+		"check": "npx @biomejs/biome lint --write"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.4",
+		"esbuild": "0.28.1",
+		"react": "19.2.7",
+		"react-dom": "19.2.7"
+	}
+}
