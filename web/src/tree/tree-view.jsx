@@ -6,10 +6,7 @@ import { Pagination } from '../shared/pagination'
 import { GitCommits } from './git-commits'
 import { Loading } from '../shared/loading'
 
-// todo: remove
-const path = ''
-
-export function TreeView() {
+export function TreeView({ path }) {
 	const [error, setError] = useState(null)
 	const [commits, setCommits] = useState(null)
 	const commitsRef = useRef(null)
@@ -41,7 +38,7 @@ export function TreeView() {
 		} finally {
 			loadingCommits.current = false
 		}
-	}, [])
+	}, [path])
 
 	const loadMoreCommits = useCallback(async () => {
 		if (loadingCommits.current || !moreCommits.current) {
@@ -91,7 +88,7 @@ export function TreeView() {
 				setError(err)
 			}
 		})()
-	}, [loadCommits])
+	}, [path, loadCommits])
 
 	if (error != null) {
 		return <ErrView />
@@ -116,27 +113,26 @@ export function TreeView() {
 	)
 }
 
-const Commit = memo(({ commit, selected, handleClick }) => {
-	return (
-		<button
-			type='button'
-			className='all-unset cursor-pointer'
-			style={{
-				display: 'grid',
-				gridColumn: 'span 3',
-				gridTemplateColumns: 'subgrid',
-				columnGap: '15px',
-				padding: '3px 0',
-				backgroundColor: selected ? 'yellow' : 'transparent',
-			}}
-			onClick={(event) => handleClick(event, commit.hash)}
-		>
-			<div>{commit.name}</div>
-			<div>{commit.authorName}</div>
-			<div>{formatAuthorDate(commit.authorDate)}</div>
-		</button>
-	)
-})
+const Commit = memo(({ commit, selected, handleClick }) => (
+	<button
+		type='button'
+		className='all-unset'
+		style={{
+			display: 'grid',
+			gridColumn: 'span 3',
+			gridTemplateColumns: 'subgrid',
+			columnGap: '15px',
+			padding: '3px 0',
+			backgroundColor: selected ? 'yellow' : 'transparent',
+			cursor: 'pointer',
+		}}
+		onClick={(event) => handleClick(event, commit.hash)}
+	>
+		<div>{commit.name}</div>
+		<div>{commit.authorName}</div>
+		<div>{formatAuthorDate(commit.authorDate)}</div>
+	</button>
+))
 
 const CommitsLoader = memo(({ onIntersect, loading }) => {
 	const [finished, setFinished] = useState(false)

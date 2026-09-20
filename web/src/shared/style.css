@@ -16,13 +16,26 @@ body {
 	all: unset;
 }
 
-.cursor-pointer {
-	cursor: pointer;
-}
-
 .link {
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+.button {
+	all: unset;
+	display: grid;
+	align-content: center;
+	background-color: black;
+	border-radius: 10px;
+	height: 40px;
+	color: white;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.button:disabled {
+	background-color: dimgray;
+	cursor: not-allowed;
 }
 
 @keyframes spin {
